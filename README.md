@@ -47,26 +47,39 @@ A infraestrutura foi configurada de forma robusta, integrando um banco de dados 
 ---
 
 ## 📊 Steps 5 e 6: Catálogo de Dados e Consultas SQL
-*(Aqui colocaremos as queries SQL e o print do painel da Dadosfera)*
+Para monitorar a volumetria e o desempenho do atendimento, estruturamos uma consulta analítica que categoriza os chamados por status e calcula o tempo médio de resolução:
+
+```sql
+SELECT 
+    status_ticket, 
+    COUNT(*) AS total_chamados,
+    ROUND(AVG(tempo_resolucao_horas), 2) AS media_horas_resolucao
+FROM 
+    suporte_chamados
+GROUP BY 
+    status_ticket;
 
 ---
 
 ## 🚀 Step 8: Itens Bônus (SSO e Automação IA)
-Implementação de SSO e Ciclo de Vida do Usuário
-Para garantir uma transição suave para o novo gerenciamento de diretório, a implementação deve ser tratada como um projeto de Gestão de Mudança:
- 1) Comunicação Antecipada (D-30): Envio de comunicados oficiais à base de clientes informando sobre a modernização da segurança (SSO).
- 2) Base de Conhecimento: Criação de tutoriais na documentação (docs.dadosfera.ai) com o passo a passo do novo login.
- 3) Janela de Manutenção: Execução da migração em horários de menor tráfego (finais de semana ou madrugada).
- 4) War Room: Suporte em estado de alerta nos primeiros 3 dias pós-implementação para resolver acessos legados que apresentem falhas.
+### Implementação de SSO e Ciclo de Vida do Usuário
+Para garantir uma transição suave para o novo gerenciamento de diretório de segurança, a adoção do SSO é estruturada como um projeto de Gestão de Mudança:
 
-Automação de Suporte com Chatbot (IA)
-A implementação da IA foca na resolução em Nível 1 (N1), reduzindo o tempo de espera do cliente e filtrando chamados repetitivos para os analistas humanos.
+1. **Comunicação Antecipada (D-30):** Envio de comunicados oficiais à base de clientes informando sobre a modernização e os ganhos de segurança com o SSO.
+2. **Base de Conhecimento:** Disponibilização de tutoriais detalhados na documentação (`docs.dadosfera.ai`) com o passo a passo do novo fluxo de autenticação.
+3. **Janela de Manutenção:** Execução técnica da migração em horários de menor tráfego (madrugadas ou finais de semana).
+4. **War Room:** Suporte em estado de alerta e plantão ativo nos primeiros 3 dias pós-implementação para mitigar qualquer falha de acesso legado.
 
-Fluxo do Atendimento:
- 1) Usuário inicia o chat relatando um erro (ex: "Minha conexão com o banco caiu").
- 2) IA (Bot) interpreta a intenção, busca a solução na base oficial (docs.dadosfera.ai) e responde com um passo a passo.
- 3) Se o Usuário avaliar que não resolveu, a IA realiza o transbordo para o Humano (Suporte Dadosfera), enviando um resumo estruturado (Data, Problema Relatado, Soluções já tentadas pela IA).
+---
 
-Exemplo de Interação:
- - Usuário: "Como configuro a VPN para conectar meu banco à Dadosfera?"
- - IA: "Olá! Para conectar sua rede privada à Dadosfera, utilizamos o OpenVPN. O primeiro passo é baixar os arquivos de configuração na plataforma. Você pode seguir o passo a passo completo neste link da nossa documentação oficial: [Link]. Conseguiu realizar o download ou precisa de ajuda com a instalação no terminal?"
+### Automação de Suporte com Chatbot (IA)
+A implementação do chatbot inteligente foca na resolução em **Nível 1 (N1)**, reduzindo o tempo de espera (*First Response Time*) e filtrando chamados repetitivos para os analistas humanos.
+
+* **Fluxo do Atendimento:**
+  1. O usuário inicia o chat relatando um problema técnico (ex: *"Minha conexão com o banco caiu"*).
+  2. A IA interpreta a intenção, busca a solução na base oficial de documentação e retorna com um passo a passo guiado.
+  3. Caso o usuário indique que o problema persiste, a IA realiza o **transbordo inteligente para o suporte humano**, anexando um resumo estruturado (Data, Problema Relatado e Tentativas já realizadas pela IA).
+
+* **Exemplo de Interação Prática:**
+  > **- Usuário:** *"Como configuro a VPN para conectar meu banco à Dadosfera?"*
+  > **- IA:** *"Olá! Para conectar sua rede privada à Dadosfera, utilizamos o OpenVPN. O primeiro passo é baixar os arquivos de configuração na plataforma. Você pode seguir o passo a passo completo neste link da nossa documentação oficial: [Link]. Conseguiu realizar o download ou precisa de ajuda com a instalação no terminal?"*
