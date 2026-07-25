@@ -7,6 +7,55 @@
 ## 🎥 Step 7: Apresentação e Validação (Vídeo)
 [Link para o vídeo no YouTube] *(Adicionaremos no último dia)*
 
+**Questão 1.** 
+Setup inicial da estação para operar com a Dadosfera (workstation readiness)
+
+Descrição do Setup e Validação:
+ - Para garantir uma operação fluida e segura com os serviços da Dadosfera, a preparação da estação de trabalho (workstation) deve seguir um protocolo rigoroso de padronização e conectividade:
+
+Sistema Operacional Recomendado: 
+ - Linux (Ubuntu/Debian) pela facilidade de gestão de pacotes e redes nativas, ou Windows 10/11 utilizando o WSL2 (Windows Subsystem for Linux) para compatibilidade de scripts.
+
+Ferramentas Essenciais:
+ - Cliente VPN: OpenVPN Client nativo.
+ - Clientes de Banco de Dados: DBeaver ou pgAdmin (para testes de queries locais e validação de schemas).
+ - Linguagens/Scripts: Python 3.x (com bibliotecas pandas e psycopg2 / sqlalchemy) para automações de extração.
+ - Utilitários de Rede: ping, traceroute (tracert), telnet, nslookup e netstat (ss).
+
+Ajustes de Segurança e Rede:
+ - Importação segura dos certificados (.crt, .key) e do arquivo de configuração .ovpn.
+ - Abertura de regras no Firewall local (UFW ou Windows Defender) para permitir tráfego na porta necessária (ex: TCP/UDP 1194).
+
+Checklist de Validação (Ponta a Ponta):
+ - Conectividade VPN: Rodar o OpenVPN e verificar se o túnel subiu sem erros de TLS (Initialization Sequence Completed).
+ - Reachability do Host: Executar ping 10.8.0.1 (ou IP de destino) para confirmar se o tráfego está trafegando pelo túnel.
+ - Teste de Porta: Executar telnet 10.8.0.1 5432 (PostgreSQL) para garantir que o firewall do servidor remoto não está bloqueando a aplicação.
+ - Autenticação: Conectar no banco via DBeaver usando as credenciais para garantir que o usuário tem as permissões corretas de GRANT nas tabelas.
+
+**Questão 2.** 
+Diagnóstico de performance de rede (queries/requisições lentas)
+
+Plano de Ação para Investigação:
+ - Quando um cliente reporta lentidão intermitente, o diagnóstico deve isolar o problema para determinar se o gargalo é na infraestrutura de rede, no túnel VPN ou no próprio banco de dados.
+
+Isolamento do Banco de Dados (Query vs. Rede):
+ - O primeiro passo é rodar a query diretamente no servidor do banco (localhost) ou analisar os logs de execução do banco (pg_stat_statements no PostgreSQL). Se a query for rápida no servidor, o gargalo é definitivamente a rede/túnel.
+
+Análise de Latência e Perda de Pacotes:
+ - Utilizar o comando ping -c 50 [IP_DO_BANCO] para medir a latência média (ms) e identificar jitter (oscilação) ou packet loss (perda de pacotes). Uma perda acima de 1-2% já causa retransmissões TCP severas.
+
+Investigação de Rotas e Gargalos (Roteadores/Firewalls):
+ - Executar o mtr (My traceroute) ou traceroute para mapear os saltos até o banco. Isso evidencia se a lentidão está ocorrendo no provedor do cliente, no gateway da nuvem ou na rota pública.
+
+Análise de MTU (Maximum Transmission Unit):
+ - Lentidões crônicas ao transferir grandes volumes de dados via VPN geralmente apontam para fragmentação de pacotes. Testar o MTU ideal usando ping -M do -s 1472 [IP_DO_BANCO]. Se houver fragmentação, ajustar a diretiva mssfix ou tun-mtu no arquivo do OpenVPN.
+
+Resolução DNS:
+ - Testar com nslookup para garantir que o tempo de resolução do endpoint não está adicionando latência antes mesmo do tráfego iniciar.
+
+Conclusão e Próximos Passos:
+ - Reunir os logs gerados nos testes acima. Se o gargalo for de rede pública, acionar a operadora. Se for fragmentação, aplicar o tuning de MTU. Se for o banco de dados, sugerir criação de índices ou refatoração da query.
+
 ---
 
 ## 🛠️ Step 1: Troubleshooting (Atendimento ao Cliente)
@@ -61,7 +110,8 @@ FROM
 GROUP BY 
     status_ticket;
 ```
-
+* **Resultado do pipeline para que os dados estejam disponíveis para consulta no Catálogo da Dadosfera.**
+  ![Instalação do Banco](print_step5_catalogo)
 ---
 
 ## 🚀 Step 8: Itens Bônus (SSO e Automação IA)
