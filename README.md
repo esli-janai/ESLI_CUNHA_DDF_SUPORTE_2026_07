@@ -25,6 +25,7 @@ Como você pode se antecipar nos próximos carregamentos?
  3) Na aba de histórico de execuções, clique sobre a execução com status de erro e selecione a opção "Baixar Logs" ou "Ver Detalhes". O arquivo mostrará exatamente em qual linha da planilha o sistema encontrou divergência.
 
 Sigo à disposição caso precise de apoio para interpretar o arquivo de log ou realizar um novo teste!
+
 ---
 
 ## 💾 Steps 2, 3 e 4: Infraestrutura e Conexão (PostgreSQL + VPN)
@@ -44,6 +45,7 @@ A infraestrutura foi configurada de forma robusta, integrando um banco de dados 
 
 * **5. Validação e Sucesso da Conexão na Plataforma:**
   ![Conexão Bem-Sucedida](print_conexao_sucesso.png)
+  
 ---
 
 ## 📊 Steps 5 e 6: Catálogo de Dados e Consultas SQL
