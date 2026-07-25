@@ -98,20 +98,28 @@ A infraestrutura foi configurada de forma robusta, integrando um banco de dados 
 ---
 
 ## 📊 Steps 5 e 6: Catálogo de Dados e Consultas SQL
-Para monitorar a volumetria e o desempenho do atendimento, estruturamos uma consulta analítica que categoriza os chamados por status e calcula o tempo médio de resolução:
+## Step 6: Visualização de Dados e Consultas SQL
+
+Nesta etapa, a tabela `TB_ESLI_SUPORTE` integrada no Data Warehouse foi conectada ao módulo de visualização para a criação de indicadores de desempenho dos chamados de suporte.
+
+### Consulta SQL Utilizada
+Abaixo está a query analítica estruturada para consolidar o total de chamados agrupados por status:
 
 ```sql
 SELECT 
-    status_ticket, 
-    COUNT(*) AS total_chamados,
-    ROUND(AVG(tempo_resolucao_horas), 2) AS media_horas_resolucao
+    Status, 
+    COUNT(*) AS total_chamados
 FROM 
-    suporte_chamados
+    "PUBLIC"."TB_ESLI_SUPORTE"
 GROUP BY 
-    status_ticket;
+    Status;
 ```
+ * **Visualização do gráfico.**
+  ![Gráfico](print_step6_grafico.png)
+
 * **Resultado do pipeline para que os dados estejam disponíveis para consulta no Catálogo da Dadosfera.**
   ![Resultado do pipeline](print_step5_catalogo.png)
+
 ---
 
 ## 🚀 Step 8: Itens Bônus (SSO e Automação IA)
