@@ -111,7 +111,7 @@ GROUP BY
     status_ticket;
 ```
 * **Resultado do pipeline para que os dados estejam disponíveis para consulta no Catálogo da Dadosfera.**
-  ![Instalação do Banco](print_step5_catalogo)
+  ![Resultado do pipeline](print_step5_catalogo.png)
 ---
 
 ## 🚀 Step 8: Itens Bônus (SSO e Automação IA)
