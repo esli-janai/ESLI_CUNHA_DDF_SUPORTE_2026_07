@@ -60,6 +60,7 @@ FROM
     suporte_chamados
 GROUP BY 
     status_ticket;
+```
 
 ---
 
