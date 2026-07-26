@@ -98,7 +98,6 @@ A infraestrutura foi configurada de forma robusta, integrando um banco de dados 
 ---
 
 ## 📊 Steps 5 e 6: Catálogo de Dados e Consultas SQL
-## Step 6: Visualização de Dados e Consultas SQL
 
 Nesta etapa, a tabela `TB_ESLI_SUPORTE` integrada no Data Warehouse foi conectada ao módulo de visualização para a criação de indicadores de desempenho dos chamados de suporte.
 
