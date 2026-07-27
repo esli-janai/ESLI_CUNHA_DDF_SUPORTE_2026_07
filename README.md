@@ -5,7 +5,7 @@
 ---
 
 ## 🎥 Step 7: Apresentação e Validação (Vídeo)
-https://youtu.be/SQXp_MC3yWs
+**Assista à apresentação completa do projeto aqui:** [Link do Vídeo](https://youtu.be/SQXp_MC3yWs)
 
 **Questão 1.** 
 Setup inicial da estação para operar com a Dadosfera (workstation readiness)
